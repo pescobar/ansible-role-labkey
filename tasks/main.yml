@@ -89,7 +89,7 @@
   yum:
     name: epel-release
     state: present
-  when: install_epel_rpm == True
+  when: install_epel_rpm
 
 - name: install R and some extra RPMS
   yum:
@@ -110,7 +110,7 @@
 
 - name: Install rmarkdown R library
   shell: Rscript -e "source ('https://bioconductor.org/biocLite.R'); biocLite('rmarkdown')"
-  when: rmarkdown_folder.stat.exists == False
+  when: not rmarkdown_folder.stat.exists
 
 - name: copy apache config for labkey
   template:
