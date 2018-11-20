@@ -1,0 +1,30 @@
+---
+# defaults file for ansible-role-labkey
+
+# register here to obtain a newer download url
+# https://www.labkey.com/products-services/labkey-server/download-community-edition/
+
+# labkey_tarball_url: "http://mirror.cluster.bc2.ch/labkey-tarballs/LabKey17.3-55100.13-community-bin.tar.gz"
+# labkey_tarball_url: "http://labkey.s3.amazonaws.com/downloads/general/r/18.2/LabKey18.2-59193.12-community-bin.tar.gz"
+labkey_tarball_url: "http://labkey.s3.amazonaws.com/downloads/general/r/18.3/LabKey18.3-61163.720-community-bin.tar.gz"
+
+labkey_install_folder: "/opt"
+
+labkey_user: "labkey"
+labkey_group: "labkey"
+
+labkey_db_name: "labkey"
+labkey_db_user: "labkeydbuser"
+labkey_db_pass: "labkeydbpass"
+
+labkey_smtp_host: "smtp.example.com"
+labkey_smtp_user: ""
+labkey_smtp_password: ""
+labkey_smtp_from: ""
+labkey_smtp_port: 25
+
+labkey_domain: "{{ ansible_fqdn }}"
+
+# should we install the epel-rpm which provides the epel repos?
+# or this is already provided in a different way? e.g. Katello
+install_epel_rpm: True

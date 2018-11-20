@@ -1,0 +1,13 @@
+---
+
+# tomcat role vars
+# these override the defaults of role ansible-role-tomcat included in meta/main.yml
+tomcat_user: "{{ labkey_user }}"
+tomcat_group: "{{ labkey_user }}"
+
+
+# postgres vars
+# these override the defaults of role ansible-role-postgres included in meta/main.yml
+postgres_user_to_create: "{{ labkey_db_user }}"
+postgress_user_password: "{{ labkey_db_pass }}"
+postgres_db_to_create: "{{ labkey_db_name }}"

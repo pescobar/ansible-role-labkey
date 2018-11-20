@@ -1,0 +1,6 @@
+---
+
+# define here all the role requirements for this playbook
+
+- pescobar.postgres
+- pescobar.tomcat

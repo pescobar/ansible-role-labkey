@@ -1,0 +1,125 @@
+---
+# tasks file for ansible-role-labkey
+
+- name: Add local group for labkey
+  group:
+    name: "{{ labkey_group }}"
+    state: present
+
+- name: add labkey user
+  user:
+    name: "{{ labkey_user }}"
+    group: "{{ labkey_group }}"
+
+- name: Download the LabKey tarball
+  get_url:
+    url: "{{ labkey_tarball_url }}"
+    dest: "{{ labkey_install_folder }}"
+  register: download
+
+- name: set a variable with the full path of the downloaded .tar.gz file
+  set_fact:
+    tarball_path: "{{ download.dest }}"
+
+# changed_when:False is required because uncompress module doesn't respect owner/group
+- name: Uncompress the tarball to {{ install_foder }} . By default /opt
+  unarchive:
+    src: "{{ tarball_path }}"
+    dest: "{{ labkey_install_folder }}"
+    owner: "{{ labkey_user }}"
+    group: "{{ labkey_group }}"
+    remote_src: yes
+  changed_when: False
+
+
+- name: Find the folder where the tarball has been uncompressed
+  find:
+    paths: "{{ labkey_install_folder }}"
+    patterns: 'LabKey*'
+    file_type: directory
+  register: find_result
+
+# [files] is a list of dicts with the info of all the directories starting by LabKey*
+# we fetch the path of last element in the list
+- name: set a variable with the path where the tarball has been uncompressed
+  set_fact:
+    labkey_path: "{{ find_result['files'][-1]['path'] }}"
+
+# this is required because uncompress module doesn't respect owner/group
+- name: Make sure that all the files in the labkey folder have the right owner/group
+  file:
+    path: "{{ labkey_path }}"
+    owner: "{{ labkey_user }}"
+    group: "{{ labkey_group }}"
+    recurse: yes
+  changed_when: False
+
+- name: Create a symlink /opt/labkey
+  file:
+    src: "{{ labkey_path }}"
+    dest: "{{ labkey_install_folder }}/labkey"
+    state: link
+
+# I use this approach with find+copy because the synchronize module breaks idempotence
+# of the ansible-role-tomcat role
+- name: Find all the jar files provided in the labkey tarball
+  find:
+    paths: "{{ labkey_install_folder }}/labkey/tomcat-lib/"
+    patterns: '*.jar'
+  register: jars_find_result
+
+- name: Copy labkey jar libs to tomcat folder
+  copy:
+    src: "{{ item.path }}"
+    dest: "{{ tomcat_install_folder }}/tomcat/lib/"
+    owner: "{{ labkey_user }}"
+    group: "{{ labkey_group }}"
+    remote_src: yes
+  with_items: "{{ jars_find_result.files }}"
+
+- name: copy Labkey config file to tomcat folder
+  template:
+    src: labkey.xml
+    dest: "{{ tomcat_install_folder }}/tomcat/conf/Catalina/localhost/ROOT.xml"
+    owner: "{{ labkey_user }}"
+    group: "{{ labkey_group }}"
+  notify: restart tomcat
+
+- name: Install epel-release rpm which provides the EPEL repos config
+  yum:
+    name: epel-release
+    state: present
+  when: install_epel_rpm == True
+
+- name: install R and some extra RPMS
+  yum:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - R
+    - pandoc
+    - pandoc-citeproc
+    - graphviz
+    - httpd
+    - mod_ssl
+
+- name: Check if the rmarkdown R library is installed
+  stat:
+    path: /usr/lib64/R/library/rmarkdown/
+  register: rmarkdown_folder
+
+- name: Install rmarkdown R library
+  shell: Rscript -e "source ('https://bioconductor.org/biocLite.R'); biocLite('rmarkdown')"
+  when: rmarkdown_folder.stat.exists == False
+
+- name: copy apache config for labkey
+  template:
+    src: etc/httpd/conf.d/labkey.conf
+    dest: /etc/httpd/conf.d/labkey.conf
+  notify: restart httpd
+
+- name: enable and start httpd service
+  service:
+    enabled: yes
+    name: httpd
+    state: started

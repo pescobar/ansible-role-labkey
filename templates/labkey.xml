@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Context path="/" docBase="{{ labkey_install_folder }}/labkey/labkeywebapp" reloadable="true" crossContext="true">
+
+    <Resource name="jdbc/labkeyDataSource" auth="Container"
+        type="javax.sql.DataSource"
+	username="{{ labkey_db_user }}"
+	password="{{ labkey_db_pass }}"
+        driverClassName="org.postgresql.Driver"
+	url="jdbc:postgresql://localhost/{{ labkey_db_name }}"
+        maxActive="20"
+        maxTotal="20"
+        maxIdle="10"
+        accessToUnderlyingConnectionAllowed="true"
+        validationQuery="SELECT 1"
+        />
+
+    <Resource name="mail/Session" auth="Container"
+        type="javax.mail.Session"
+	mail.smtp.host="{{ labkey_smtp_host }}"
+	{% if labkey_smtp_user is defined %}
+	mail.smtp.user="{{ labkey_smtp_user }}"
+	{% else %}
+	mail.smtp.user=""
+	{%endif %}
+	{% if labkey_smtp_password is defined %}
+	mail.smtp.password="{{ labkey_smtp_password }}"
+	{%endif %}
+	{% if labkey_smtp_from is defined %}
+	mail.smtp.from="{{ labkey_smtp_from }}"
+	{%endif %}
+	mail.smtp.port="{{ labkey_smtp_port }}"/>
+
+    <Resources cachingAllowed="true" cacheMaxSize="20000" />
+
+    <Loader loaderClass="org.labkey.bootstrap.LabKeyBootstrapClassLoader" />
+
+    <!-- Encryption key for encrypted property store -->
+    <Parameter name="MasterEncryptionKey" value="@@masterEncryptionKey@@" />
+
+    <!-- mzML support via JNI -->
+    <!--
+	<Parameter name="org.labkey.api.ms2.mzmlLibrary" value="pwiz_swigbindings"></Parameter>
+	 -->
+
+    <!-- Track installations from Windows Installer -->
+    <!--@@installer@@ <Parameter name="org.labkey.api.util.mothershipreport.usedInstaller" value="true"/> @@installer@@-->
+
+    <!-- Pipeline configuration -->
+    <!--@@pipeline@@    <Parameter name="org.labkey.api.pipeline.config" value="@@pipelineConfigPath@@"/> @@pipeline@@-->
+
+    <!--        brokerURL="tcp://localhost:61616" userName="username" password="password" -->
+    <!--@@jmsConfig@@ <Resource name="jms/ConnectionFactory" auth="Container"
+        type="org.apache.activemq.ActiveMQConnectionFactory"
+        factory="org.apache.activemq.jndi.JNDIReferenceFactory"
+        description="JMS Connection Factory"
+        brokerURL="vm://localhost?broker.persistent=false&amp;broker.useJmx=false"
+        brokerName="LocalActiveMQBroker"/> @@jmsConfig@@-->
+</Context>
