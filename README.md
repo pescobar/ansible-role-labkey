@@ -37,11 +37,8 @@ install_epel_rpm: True
 Dependencies
 ------------
 
-```
 - [pescobar.postgres](https://galaxy.ansible.com/pescobar/postgres)
 - [pescobar.tomcat](https://galaxy.ansible.com/pescobar/tomcat)
-
-```
 
 
 Example Playbook
