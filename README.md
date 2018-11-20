@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/pescobar/ansible-role-labkey.svg?branch=master)](https://travis-ci.org/pescobar/ansible-role-labkey)
+
 ansible-role-labkey
 =========
 
