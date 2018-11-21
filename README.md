@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.org/pescobar/ansible-role-labkey.svg?branch=master)](https://travis-ci.org/pescobar/ansible-role-labkey)
+[![Ansible Galaxy](https://img.shields.io/badge/galaxy-pescobar.labkey-blue.svg)](https://galaxy.ansible.com/pescobar/labkey)
 
-ansible-role-labkey
+pescobar.labkey
 =========
 
 Installs a labkey server
