@@ -89,7 +89,7 @@
   yum:
     name: epel-release
     state: present
-  when: install_epel_rpm
+  when: labkey_install_epel_repo
 
 - name: install R and some extra RPMS
   yum:

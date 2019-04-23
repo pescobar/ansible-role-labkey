@@ -34,7 +34,7 @@ labkey_domain: "{{ ansible_fqdn }}"
 
 # should we install the epel-rpm which provides the epel repos?
 # or this is already provided in a different way? e.g. Katello
-install_epel_rpm: True
+labkey_install_epel_repo: True
 ```
 
 Dependencies
