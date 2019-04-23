@@ -6,7 +6,8 @@
 
 # labkey_tarball_url: "http://mirror.cluster.bc2.ch/labkey-tarballs/LabKey17.3-55100.13-community-bin.tar.gz"
 # labkey_tarball_url: "http://labkey.s3.amazonaws.com/downloads/general/r/18.2/LabKey18.2-59193.12-community-bin.tar.gz"
-labkey_tarball_url: "http://labkey.s3.amazonaws.com/downloads/general/r/18.3/LabKey18.3-61163.720-community-bin.tar.gz"
+# labkey_tarball_url: "http://labkey.s3.amazonaws.com/downloads/general/r/18.3/LabKey18.3-61163.720-community-bin.tar.gz"
+labkey_tarball_url: "http://labkey.s3.amazonaws.com/downloads/general/r/19.1.1/LabKey19.1.1-63156.2-community-bin.tar.gz"
 
 labkey_install_folder: "/opt"
 
