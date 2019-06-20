@@ -4,11 +4,11 @@
 pescobar.labkey
 =========
 
-Installs a labkey server
+Installs a labkey server in Centos7
 
-This role will install Java (openjdk) + Apache tomcat + postgres + labkey
+This role will install postgres + Java (openjdk) + Apache tomcat + labkey
 
-You should configure Apache or Nginx outside this role
+You should configure Apache or Nginx (or any other reverse proxy) outside of this role (see examples).
 
 
 Role Variables
@@ -44,7 +44,6 @@ labkey_install_epel_repo: True
 Dependencies
 ------------
 
-- [geerlingguy.apache](https://galaxy.ansible.com/geerlingguy/apache)
 - [anxs.postgresql](https://galaxy.ansible.com/ANXS/postgresql)
 - [pescobar.tomcat](https://galaxy.ansible.com/pescobar/tomcat)
 
@@ -88,34 +87,42 @@ Example Playbook with apache as reverse proxy
 
   tasks:
     
-    - name: Deploy labkey server
+    - name: Deploy LabKey
+      import_role:
+        name: pescobar.labkey
+      vars:
+        labkey_domain: "{{ ansible_fqdn }}"
+        labkey_install_folder: "/opt"
+        labkey_user: "labkey"
+        labkey_group: "labkey"
+        labkey_db_name: "labkey"
+        labkey_db_user: "labkeydbuser"
+        labkey_db_pass: "labkeydbpass"
+        labkey_smtp_host: "smtp.example.com"
+        labkey_smtp_user: ""
+        labkey_smtp_password: ""
+        labkey_smtp_from: ""
+        labkey_smtp_port: 25
+
+    - name: Deploy apache webserver as reverse proxy
       import_role:
         name: geerlingguy.apache
       vars:
-        apache_global_vhost_settings: |
-          DirectoryIndex index.php index.html
-          ServerTokens Prod
-    
-          Alias /.well-known/acme-challenge/ {{ dehydrated_wellknown_dir }}
-          <Directory {{ dehydrated_wellknown_dir }} >
-             Require all granted
-          </Directory>
-    
         apache_vhosts:
-          - servername: "{{ vhost_public_domain }}"
-            serveralias: "www.{{ vhost_public_domain }}"
-            serveradmin: "{{ dehydrated_contact_email }}"
-            documentroot: "/var/www/{{ vhost_public_domain }}"
+          - servername: "{{ labkey_domain }}"
+            serveralias: "www.{{ labkey_domain }}"
+            serveradmin: "foo@bar.com"
+            documentroot: "/var/www/html"
             extra_parameters: |
-    
+
               ProxyRequests Off
               ProxyPreserveHost On
-    
+
               <Proxy *>
                   Order deny,allow
                   Allow from all
               </Proxy>
-    
+
               ProxyPass / http://localhost:8080/ retry=1
               ProxyPassReverse / http://localhost:8080/
 ```          
