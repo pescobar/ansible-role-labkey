@@ -40,7 +40,8 @@ labkey_install_epel_repo: True
 Dependencies
 ------------
 
-- [pescobar.postgres](https://galaxy.ansible.com/pescobar/postgres)
+- [geerlingguy.apache](https://galaxy.ansible.com/geerlingguy/apache)
+- [anxs.postgresql](https://galaxy.ansible.com/ANXS/postgresql)
 - [pescobar.tomcat](https://galaxy.ansible.com/pescobar/tomcat)
 
 
