@@ -17,5 +17,5 @@ galaxy_info:
     - labkey
 
 dependencies:
-  - pescobar.postgres
+  - anxs.postgresql
   - pescobar.tomcat
