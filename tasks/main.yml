@@ -93,15 +93,14 @@
 
 - name: install R and some extra RPMS
   yum:
-    name: "{{ item }}"
+    name:
+      - R
+      - pandoc
+      - pandoc-citeproc
+      - graphviz
+      - httpd
+      - mod_ssl
     state: present
-  with_items:
-    - R
-    - pandoc
-    - pandoc-citeproc
-    - graphviz
-    - httpd
-    - mod_ssl
 
 - name: Check if the rmarkdown R library is installed
   stat:
