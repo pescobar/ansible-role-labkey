@@ -6,6 +6,10 @@ pescobar.labkey
 
 Installs a labkey server
 
+This role will install Java (openjdk) + Apache tomcat + postgres + labkey
+
+You should configure Apache or Nginx outside this role
+
 
 Role Variables
 --------------
@@ -45,17 +49,76 @@ Dependencies
 - [pescobar.tomcat](https://galaxy.ansible.com/pescobar/tomcat)
 
 
-Example Playbook
+Example Playbook installing only tomcat + labkey (no reverse proxy)
 ----------------
+```
+- name: Configure labkey
+  hosts: webserver
+  gather_facts: True
+  remote_user: root
 
-    - hosts: servers
-      roles:
-         - { role: pescobar.labkey,
-	     tomcat_user: "labkey",
-	     tomcat_group: "labkey",
-	     postgres_user_to_create: "labkeydbuser",
-	     postgress_user_password: "labkeydbpass",
-	     postgres_db_to_create: "labkey"}
+  tasks:
+
+    - name: Deploy labkey server
+      import_role:
+        name: pescobar.labkey
+      vars:
+        labkey_domain: "{{ ansible_fqdn }}"
+        labkey_install_folder: "/opt"
+        labkey_user: "labkey"
+        labkey_group: "labkey"
+        labkey_db_name: "labkey"
+        labkey_db_user: "labkeydbuser"
+        labkey_db_pass: "labkeydbpass"
+        labkey_smtp_host: "smtp.example.com"
+        labkey_smtp_user: ""
+        labkey_smtp_password: ""
+        labkey_smtp_from: ""
+        labkey_smtp_port: 25
+```
+
+Example Playbook with apache as reverse proxy
+-------------------
+
+```
+- name: Configure labkey
+  hosts: webserver
+  gather_facts: True
+  remote_user: root
+
+  tasks:
+    
+    - name: Deploy labkey server
+      import_role:
+        name: geerlingguy.apache
+      vars:
+        apache_global_vhost_settings: |
+          DirectoryIndex index.php index.html
+          ServerTokens Prod
+    
+          Alias /.well-known/acme-challenge/ {{ dehydrated_wellknown_dir }}
+          <Directory {{ dehydrated_wellknown_dir }} >
+             Require all granted
+          </Directory>
+    
+        apache_vhosts:
+          - servername: "{{ vhost_public_domain }}"
+            serveralias: "www.{{ vhost_public_domain }}"
+            serveradmin: "{{ dehydrated_contact_email }}"
+            documentroot: "/var/www/{{ vhost_public_domain }}"
+            extra_parameters: |
+    
+              ProxyRequests Off
+              ProxyPreserveHost On
+    
+              <Proxy *>
+                  Order deny,allow
+                  Allow from all
+              </Proxy>
+    
+              ProxyPass / http://localhost:8080/ retry=1
+              ProxyPassReverse / http://localhost:8080/
+```          
 
 License
 -------
