@@ -17,6 +17,5 @@ galaxy_info:
     - labkey
 
 dependencies:
-  - geerlingguy.apache
   - anxs.postgresql
   - pescobar.tomcat

@@ -12,12 +12,6 @@ def test_opt_labkey(host):
     assert f.exists
 
 
-def test_apache_service(host):
-    s = host.service('httpd')
-    assert s.is_running
-    assert s.is_enabled
-
-
 def test_tomcat_service(host):
     s = host.service('tomcat')
     assert s.is_running

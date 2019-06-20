@@ -31,7 +31,6 @@
     remote_src: yes
   changed_when: False
 
-
 - name: Find the folder where the tarball has been uncompressed
   find:
     paths: "{{ labkey_install_folder }}"
@@ -98,7 +97,6 @@
       - pandoc
       - pandoc-citeproc
       - graphviz
-      - httpd
       - mod_ssl
     state: present
 
@@ -110,9 +108,3 @@
 - name: Install rmarkdown R library
   shell: Rscript -e "source ('https://bioconductor.org/biocLite.R'); biocLite('rmarkdown')"
   when: not rmarkdown_folder.stat.exists
-
-- name: enable and start httpd service
-  service:
-    enabled: yes
-    name: httpd
-    state: started
