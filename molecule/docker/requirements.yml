@@ -2,5 +2,6 @@
 
 # define here all the role requirements for this playbook
 
+- geerlingguy.apache
 - anxs.postgresql
 - pescobar.tomcat

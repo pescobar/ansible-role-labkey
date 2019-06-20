@@ -111,12 +111,6 @@
   shell: Rscript -e "source ('https://bioconductor.org/biocLite.R'); biocLite('rmarkdown')"
   when: not rmarkdown_folder.stat.exists
 
-- name: copy apache config for labkey
-  template:
-    src: etc/httpd/conf.d/labkey.conf
-    dest: /etc/httpd/conf.d/labkey.conf
-  notify: restart httpd
-
 - name: enable and start httpd service
   service:
     enabled: yes
