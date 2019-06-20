@@ -27,11 +27,6 @@ tomcat_group: "{{ labkey_user }}"
 
 # postgres vars
 # these override the defaults of role anxs.postgresql included in meta/main.yml
-postgresql_version: 11
-postgresql_encoding: "UTF-8"
-postgresql_admin_user: "postgres"
-postgresql_default_auth_method: "peer"
-
 postgresql_databases:
   - name: "{{ labkey_db_name }}"
     owner: "{{ labkey_db_user }}"          # optional; specify the owner of the database
