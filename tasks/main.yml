@@ -100,11 +100,11 @@
       - mod_ssl
     state: present
 
-# - name: Check if the rmarkdown R library is installed
-#   stat:
-#     path: /usr/lib64/R/library/rmarkdown/
-#   register: rmarkdown_folder
+- name: Check if the rmarkdown R library is installed
+  stat:
+    path: /usr/lib64/R/library/rmarkdown/
+  register: rmarkdown_folder
 
-# - name: Install rmarkdown R library
-#   shell: Rscript -e "source ('https://bioconductor.org/biocLite.R'); biocLite('rmarkdown')"
-#   when: not rmarkdown_folder.stat.exists
+- name: Install rmarkdown R library
+  shell: Rscript -e "source ('https://bioconductor.org/biocLite.R'); biocLite('rmarkdown')"
+  when: not rmarkdown_folder.stat.exists
