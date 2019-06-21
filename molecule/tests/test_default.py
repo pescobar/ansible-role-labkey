@@ -16,3 +16,10 @@ def test_tomcat_service(host):
     s = host.service('tomcat')
     assert s.is_running
     assert s.is_enabled
+
+
+def test_tomcat_listen_address(host):
+    # install iproute to use the socket test
+    host.ansible("command", "yum -y install iproute", become=True, check=False)
+    s = host.socket('tcp://0.0.0.0:8080')
+    assert s.is_listening
