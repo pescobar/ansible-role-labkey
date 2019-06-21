@@ -45,7 +45,7 @@ Dependencies
 ------------
 
 - [anxs.postgresql](https://galaxy.ansible.com/ANXS/postgresql)
-- [pescobar.apache_tomcat](https://github.com/pescobar/apache_tomcat)
+- [pescobar.apache_tomcat](https://galaxy.ansible.com/pescobar/apache_tomcat)
 
 
 Example Playbook installing only tomcat + labkey (no reverse proxy)
