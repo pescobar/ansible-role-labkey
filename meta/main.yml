@@ -18,4 +18,8 @@ galaxy_info:
 
 dependencies:
   - anxs.postgresql
-  - pescobar.tomcat
+  - pescobar.java_openjdk
+  - name: tomcat-ansible-role
+    src: https://github.com/pescobar/tomcat-ansible-role.git
+    scm: git
+    version: master

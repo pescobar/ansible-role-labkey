@@ -1,9 +1,13 @@
 ---
 
 # tomcat role vars
-# these override the defaults of role ansible-role-tomcat included in meta/main.yml
+# these override the defaults of tomcat role included in meta/main.yml
 tomcat_user: "{{ labkey_user }}"
 tomcat_group: "{{ labkey_user }}"
+tomcat_install_java: false   # we install java using role pescobar.java_openjdk
+tomcat_java_home: /opt/java  # we install java using role pescobar.java_openjdk
+tomcat_jvm_memory_percentage_xms: 15
+tomcat_jvm_memory_percentage_xmx: 85
 
 
 # postgres vars

@@ -3,4 +3,6 @@
 # define here all the role requirements for this playbook
 
 - anxs.postgresql
-- pescobar.tomcat
+- pescobar.java_openjdk
+- src: https://github.com/pescobar/tomcat-ansible-role
+  version: master
