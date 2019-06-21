@@ -4,5 +4,4 @@
 
 - anxs.postgresql
 - pescobar.java_openjdk
-- src: https://github.com/pescobar/tomcat-ansible-role
-  version: master
+- pescobar.apache_tomcat
