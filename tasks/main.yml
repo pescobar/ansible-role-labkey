@@ -106,5 +106,5 @@
   register: rmarkdown_folder
 
 - name: Install rmarkdown R library
-  shell: Rscript -e "source ('https://bioconductor.org/biocLite.R'); biocLite('rmarkdown')"
+  shell: Rscript -e "install.packages('BiocManager', repos='http://cloud.r-project.org', dependencies = TRUE); BiocManager::install(c('rmarkdown'))"
   when: not rmarkdown_folder.stat.exists
