@@ -3,10 +3,10 @@
 
     <Resource name="jdbc/labkeyDataSource" auth="Container"
         type="javax.sql.DataSource"
-	username="{{ labkey_db_user }}"
-	password="{{ labkey_db_pass }}"
+        username="{{ labkey_db_user }}"
+        password="{{ labkey_db_pass }}"
         driverClassName="org.postgresql.Driver"
-	url="jdbc:postgresql://localhost/{{ labkey_db_name }}"
+        url="jdbc:postgresql://localhost/{{ labkey_db_name }}"
         maxActive="20"
         maxTotal="20"
         maxIdle="10"
@@ -16,19 +16,19 @@
 
     <Resource name="mail/Session" auth="Container"
         type="javax.mail.Session"
-	mail.smtp.host="{{ labkey_smtp_host }}"
-	{% if labkey_smtp_user is defined %}
-	mail.smtp.user="{{ labkey_smtp_user }}"
-	{% else %}
-	mail.smtp.user=""
-	{%endif %}
-	{% if labkey_smtp_password is defined %}
-	mail.smtp.password="{{ labkey_smtp_password }}"
-	{%endif %}
-	{% if labkey_smtp_from is defined %}
-	mail.smtp.from="{{ labkey_smtp_from }}"
-	{%endif %}
-	mail.smtp.port="{{ labkey_smtp_port }}"/>
+        mail.smtp.host="{{ labkey_smtp_host }}"
+        {% if labkey_smtp_user is defined %}
+        mail.smtp.user="{{ labkey_smtp_user }}"
+        {% else %}
+        mail.smtp.user=""
+        {%endif %}
+        {% if labkey_smtp_password is defined %}
+        mail.smtp.password="{{ labkey_smtp_password }}"
+        {%endif %}
+        {% if labkey_smtp_from is defined %}
+        mail.smtp.from="{{ labkey_smtp_from }}"
+        {%endif %}
+        mail.smtp.port="{{ labkey_smtp_port }}"/>
 
     <Resources cachingAllowed="true" cacheMaxSize="20000" />
 
@@ -39,8 +39,8 @@
 
     <!-- mzML support via JNI -->
     <!--
-	<Parameter name="org.labkey.api.ms2.mzmlLibrary" value="pwiz_swigbindings"></Parameter>
-	 -->
+    <Parameter name="org.labkey.api.ms2.mzmlLibrary" value="pwiz_swigbindings"></Parameter>
+    -->
 
     <!-- Track installations from Windows Installer -->
     <!--@@installer@@ <Parameter name="org.labkey.api.util.mothershipreport.usedInstaller" value="true"/> @@installer@@-->
