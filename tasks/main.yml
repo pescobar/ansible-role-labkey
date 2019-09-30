@@ -15,6 +15,7 @@
   get_url:
     url: "{{ labkey_tarball_url }}"
     dest: "{{ labkey_install_folder }}"
+    checksum: "sha1:{{ labkey_tarball_checksum }}"
   register: download
 
 - name: set a variable with the full path of the downloaded .tar.gz file
