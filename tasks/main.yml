@@ -81,7 +81,7 @@
 - name: copy Labkey config file to tomcat folder
   template:
     src: labkey.xml
-    dest: "{{ tomcat_install_path }}/tomcat/conf/Catalina/localhost/ROOT.xml"
+    dest: "{{ tomcat_install_path }}/tomcat/conf/Catalina/localhost/{{ labkey_config_filename }}"
     owner: "{{ labkey_user }}"
     group: "{{ labkey_group }}"
   notify: restart tomcat
