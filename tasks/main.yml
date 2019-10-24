@@ -81,9 +81,10 @@
 - name: copy Labkey config file to tomcat folder
   template:
     src: labkey.xml
-    dest: "{{ tomcat_install_path }}/tomcat/conf/Catalina/localhost/{{ labkey_config_filename }}"
+    dest: "{{ tomcat_install_path }}/tomcat/conf/Catalina/localhost/{{ labkey_config_file }}"
     owner: "{{ labkey_user }}"
     group: "{{ labkey_group }}"
+  when: labkey_config_deploy
   notify: restart tomcat
 
 - name: Install epel-release rpm which provides the EPEL repos config

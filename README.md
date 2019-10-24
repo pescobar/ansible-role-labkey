@@ -28,7 +28,7 @@ labkey_group: "labkey"
 
 # use the default value "ROOT.xml" if you plan to access labkey in the root url e.g. http://domain.com
 # define this var to a custom name e.g. "labkey.xml" if you plan to access labkey in a sub-url like http://domain.com/labkey
-labkey_config_filename: "ROOT.xml"
+labkey_config_file: "ROOT.xml"
 
 labkey_db_name: "labkey"
 labkey_db_user: "labkeydbuser"
