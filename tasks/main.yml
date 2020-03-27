@@ -100,7 +100,9 @@
       - pandoc
       - pandoc-citeproc
       - graphviz
-      - mod_ssl
+      - libcurl-devel
+      - openssl-devel
+      - ImageMagick
     state: present
 
 - name: Check if the rmarkdown R library is installed
@@ -111,3 +113,12 @@
 - name: Install rmarkdown R library
   shell: Rscript -e "install.packages('BiocManager', repos='http://cloud.r-project.org', dependencies = TRUE); BiocManager::install(c('rmarkdown'))"
   when: not rmarkdown_folder.stat.exists
+
+- name: Check if the Rlabkey R library is installed
+  stat:
+    path: /usr/lib64/R/library/Rlabkey/
+  register: rlabkey_folder
+
+- name: Install Rlabkey R library
+  shell: Rscript -e "install.packages('BiocManager', repos='http://cloud.r-project.org', dependencies = TRUE); BiocManager::install(c('Rlabkey'))"
+  when: not rlabkey_folder.stat.exists
