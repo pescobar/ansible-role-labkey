@@ -10,9 +10,9 @@
 # labkey_tarball_url: "http://labkey.s3.amazonaws.com/downloads/general/r/18.3/LabKey18.3-61163.720-community-bin.tar.gz"
 # labkey_tarball_url: "http://labkey.s3.amazonaws.com/downloads/general/r/19.1.1/LabKey19.1.1-63156.2-community-bin.tar.gz"
 # labkey_tarball_url: "http://labkey.s3.amazonaws.com/downloads/general/r/19.2.0/LabKey19.2.0-64183.3-community-bin.tar.gz"
-labkey_tarball_url: "http://labkey.s3.amazonaws.com/downloads/general/r/19.3.7/LabKey19.3.7-65196.17-community-bin.tar.gz"
+labkey_tarball_url: "http://labkey.s3.amazonaws.com/downloads/general/r/19.3.10/LabKey19.3.10-65330.20-community-bin.tar.gz"
 # checksum is sha1. From docs "If you worry about portability, only the sha1 algorithm is available on all platforms and python versions"
-labkey_tarball_checksum: 901d092c8ed991d0427cc73c4910d3969d093267
+labkey_tarball_checksum: fffc68886c84ce312ba683b1b2b336c29c3f4388
 
 labkey_install_folder: "/opt"
 
